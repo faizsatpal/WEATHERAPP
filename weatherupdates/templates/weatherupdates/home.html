@@ -1,0 +1,44 @@
+{% extends 'weatherupdates/base.html' %}
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-6">
+        <div class="text-center p-4 bg-gradient rounded mb-4" style="background: linear-gradient(45deg, #28a745, #218838); color: white;">
+            <h1 class="display-5">WELCOME TO WEATHER APP</h1>
+        </div>
+        <h1 style="text-align:center">WELCOME TO WEATHER APP</h1>
+        <form action="." method="POST" class="shadow p-3 mb-5 bg-white rounded">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" required class="form-control form-control-lg" name="city" placeholder="Search City...">
+                <button class="btn btn-success btn-lg" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
+        <hr class="my-4">
+        {% if city_weather_update %}
+        <div class="card shadow-lg border-0">
+            <div class="card-body text-center">
+                <img src="http://openweathermap.org/img/w/{{ city_weather_update.icon }}.png" alt="Weather Icon" class="img-fluid mb-3">
+                <h5 class="card-title">{{ city_weather_update.city }}, {{ city_weather_update.country_code }}</h5>
+                <p class="card-text text-muted">{{ city_weather_update.time }}</p>
+                <h6 class="display-6 text-primary">{{ city_weather_update.temperature }}&#8451;</h6>
+                <p class="text-capitalize text-secondary">{{ city_weather_update.description }}</p>
+                <div class="d-flex justify-content-around mt-4">
+                    <div class="text-center">
+                        <h6 class="text-muted">Wind</h6>
+                        <p>{{ city_weather_update.wind }} km/h</p>
+                    </div>
+                    <div class="text-center">
+                        <h6 class="text-muted">Humidity</h6>
+                        <p>{{ city_weather_update.humidity }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center text-muted">Enter a city name to get the latest weather updates.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
